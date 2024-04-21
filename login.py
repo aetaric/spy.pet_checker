@@ -5,11 +5,6 @@ import requests
 
 cli = sys.modules['flask.cli']
 cli.show_server_banner = lambda *x: None
-user = {
-    'logged_in' : False,
-    'authorized' : False,
-    'details' : None
-}
 
 def thread_oauth():
     log = logging.getLogger('werkzeug')
@@ -76,11 +71,9 @@ def thread_oauth():
 
     @app.route('/me')
     def me():
-        global user
         discord = make_session(token=session.get('oauth2_token'))
         guilds = discord.get(API_BASE_URL + '/users/@me/guilds').json() #Fetches Servers
         pet_json = requests.get('https://raw.githubusercontent.com/burnafterburning/Spy-pet-Server-list/main/out2.json').json()
-        user['logged_in'] = True
         servers = []
         servers.append("server name: spy.pet user id")
         for guild in guilds: #Searches through servers
