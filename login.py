@@ -74,11 +74,14 @@ def thread_oauth():
         discord = make_session(token=session.get('oauth2_token'))
         guilds = discord.get(API_BASE_URL + '/users/@me/guilds').json() #Fetches Servers
         servers = []
-        servers.append("server name: spy.pet user id")
         for guild in guilds: #Searches through servers
             pet_api = requests.get('https://kickthespy.pet/getBot?id=%s' % str(guild['id'])).json()
             if not 'error' in pet_api.keys():
-                servers.append("%s: %s, %s" % (str(guild['name']), pet_api["id"], pet_api["username"]))
+                data = {}
+                data['servername'] = str(guild['name'])
+                data['userid'] = str(pet_api["id"])
+                data['username'] = str(pet_api["username"])
+                servers.append(data)
             
         return servers
     app.run(debug=True, use_reloader=False)
