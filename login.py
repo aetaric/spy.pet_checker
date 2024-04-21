@@ -76,7 +76,7 @@ def thread_oauth():
         servers = []
         servers.append("server name: spy.pet user id")
         for guild in guilds: #Searches through servers
-            pet_api = requests.get('https://api.spy.pet/servers/%s' % str(guild['id'])).json()
+            pet_api = requests.get('https://kickthespy.pet/getBot?id=%s' % str(guild['id'])).json()
             if not pet_api['error'] == "Bot not found":
                 servers.append("%s: %s" % (pet_json[server], pet_api["onAccount"]))
             
