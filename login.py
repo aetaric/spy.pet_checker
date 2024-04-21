@@ -81,7 +81,7 @@ def thread_oauth():
         guilds = discord.get(API_BASE_URL + '/users/@me/guilds').json() #Fetches Servers
         pet_json = requests.get('https://raw.githubusercontent.com/burnafterburning/Spy-pet-Server-list/main/out2.json').json()
         user['logged_in'] = True
-        print("server name, spy.pet user id")
+        print("server name: spy.pet user id")
         for guild in guilds: #Searches through servers
             for server in pet_json:
                 if server == str(guild['id']):
