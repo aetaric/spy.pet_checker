@@ -73,15 +73,12 @@ def thread_oauth():
     def me():
         discord = make_session(token=session.get('oauth2_token'))
         guilds = discord.get(API_BASE_URL + '/users/@me/guilds').json() #Fetches Servers
-        pet_json = requests.get('https://raw.githubusercontent.com/burnafterburning/Spy-pet-Server-list/main/out2.json').json()
         servers = []
         servers.append("server name: spy.pet user id")
         for guild in guilds: #Searches through servers
-            for server in pet_json:
-                if server == str(guild['id']):
-                    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'}
-                    pet_api = requests.get('https://api.spy.pet/servers/%s' % server, headers=headers).json()
-                    servers.append("%s: %s" % (pet_json[server], pet_api["onAccount"]))
+            pet_api = requests.get('https://api.spy.pet/servers/%s' % str(guild['id'])).json()
+            if not pet_api['error'] == "Bot not found":
+                servers.append("%s: %s" % (pet_json[server], pet_api["onAccount"]))
             
         return servers
     app.run(debug=True, use_reloader=False)
